@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/27fe5071b6.js" crossorigin="anonymous"></script>
+
+    <title>Iniciar Sesión</title>
+    <link rel="icon" href="img/firma.png">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-black">
+
+<body class="">
     <nav class="navbar navbar-expand-md bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand m-auto px-4" href="home.html">
@@ -14,5 +25,23 @@
             </a>
         </div>
     </nav>
+
+    <div class="m-5 card bg-dark text-light">
+        <form action="" class="m-3">
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input type="text" class="mb-3 form-control" name="nombre" id="nombre">
+            </div>
+            <div class="mb-3">
+                <label for="pass" class="form-label">Contraseña</label>
+                <input type="password" class="mb-3 form-control" name="pass" id="pass">
+            </div>
+            <div class="d-grid gap-2 mx-5 mt-4">
+                <input type="button" class="btn btn-danger" value="Inicia Sessión">
+            </div>
+        </form>
+    </div>
+
 </body>
+
 </html>
