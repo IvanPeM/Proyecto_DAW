@@ -4,13 +4,24 @@ const express = require('express');
 const cors = require('cors');
 
 const app = express();
+require('./database');
+
+//Indica donde está los archivos del frontend.
+app.use(express.static('frontend/src'));
 
 app.get('/', (req, res) => {
-    res.send('Hola mundo!');
+    // res.send('Hola mundo!');
+    res.sendFile('index.html');
 });
 
+app.get('/admin', (req, res) => {
+    // res.send('Hola mundo!');
+    res.sendFile('login.html');
+});
 
 app.use(cors());
+
+//Para entender la informacion de un formulario.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
