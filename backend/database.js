@@ -2,6 +2,8 @@
 
 const mongoose = require('mongoose');
 
+// para inicializar la basa de datos se tiene que poner
+// en la terminal mongod.
 mongoose.connect('mongodb://localhost:27017/', {
     useCreateIndex: true,
     useNewUrlParser: true,

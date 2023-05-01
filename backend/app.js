@@ -3,6 +3,7 @@
 const express = require('express');
 const cors = require('cors');
 
+// Empezar a inicializar con el comando node .\backend\app.js
 const app = express();
 require('./database');
 
