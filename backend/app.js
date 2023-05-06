@@ -5,6 +5,11 @@ const cors = require('cors');
 
 // Empezar a inicializar con el comando node .\backend\app.js
 const app = express();
+
+// Exportar dotenv para que funcione .env
+require('dotenv').config();
+
+// Exporto la base de datos para que inicie.
 require('./database');
 
 //Indica donde está los archivos del frontend.
@@ -33,6 +38,6 @@ app.post('/colocaFicha', (req, res) => {
     ponerFicha(TABLERO, ob.x, ob.y);
 });
 
-app.listen(3000, () => {
-    console.log("Servidor levantado");
+app.listen(process.env.PORT, () => {
+    console.log("___Servidor levantado.___");
 });
