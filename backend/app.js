@@ -32,10 +32,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-app.post('/colocaFicha', (req, res) => {
+app.post('/prueba', (req, res) => {
     // console.log("body", req.body);
     let ob = req.body;
-    ponerFicha(TABLERO, ob.x, ob.y);
 });
 
 app.listen(process.env.PORT, () => {
