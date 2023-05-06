@@ -36,6 +36,6 @@ mongoose.connect(DBURL, {
 //     });
 
 // Buscar en la base de datos todos los Platos.
-// Plato.find({}).then(result =>{
-//     console.log(result);
-// });
+Plato.find({}).then(result =>{
+    console.log(result);
+});
