@@ -14,16 +14,16 @@ require('dotenv').config();
 require('./database');
 
 //Indica donde está los archivos del frontend.
-app.use(express.static(path.join(__dirname, 'frontend/src')));
+app.use(express.static(path.join(__dirname, '../frontend/src')));
 
 app.get('/', (req, res) => {
     // res.send('Hola mundo!');
-    res.sendFile(path.join(__dirname, 'frontend/src/index.html'));
+    res.sendFile(path.join(__dirname, '../frontend/src/index.html'));
 });
 
 app.get('/admin', (req, res) => {
     // res.send('Hola mundo!');
-    res.sendFile(path.join(__dirname, 'frontend/src/login.html'));
+    res.sendFile(path.join(__dirname, '../frontend/src/login.html'));
 });
 
 app.use(cors());
