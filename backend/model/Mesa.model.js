@@ -16,10 +16,8 @@ const mesaSchema = new mongoose.Schema({
         type: String,
         require: true
     },
-    platos: {
-        pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }],
-        recibidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }]
-    }
+    pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }],
+    recibidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }]
 });
 
 const Mesa = mongoose.model('Mesa', mesaSchema);
