@@ -2,11 +2,11 @@
 
 $(document).ready(() => {
     console.log("Web cargada.");
-    getTablero();
+    main();
 });
 
-function getTablero() {
-    $.get("http://localhost:3000/tablero", (data, status) => {
+function main() {
+    $.get("http://localhost:3000/", (data, status) => {
         // console.log("data : ", data);
         // console.log("status : ", status);
         impresora(data);

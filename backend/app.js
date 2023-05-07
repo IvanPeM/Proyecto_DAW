@@ -2,6 +2,7 @@
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 // Empezar a inicializar con el comando node .\backend\app.js
 const app = express();
@@ -13,16 +14,16 @@ require('dotenv').config();
 require('./database');
 
 //Indica donde está los archivos del frontend.
-app.use(express.static('frontend/src'));
+app.use(express.static(path.join(__dirname, 'frontend/src')));
 
 app.get('/', (req, res) => {
     // res.send('Hola mundo!');
-    res.sendFile('index.html');
+    res.sendFile(path.join(__dirname, 'frontend/src/index.html'));
 });
 
 app.get('/admin', (req, res) => {
     // res.send('Hola mundo!');
-    res.sendFile('login.html');
+    res.sendFile(path.join(__dirname, 'frontend/src/login.html'));
 });
 
 app.use(cors());
@@ -38,5 +39,5 @@ app.post('/prueba', (req, res) => {
 });
 
 app.listen(process.env.PORT, () => {
-    console.log("___Servidor levantado.___");
+    console.log("__Servidor levantado.__");
 });

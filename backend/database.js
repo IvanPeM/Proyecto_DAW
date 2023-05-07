@@ -14,7 +14,7 @@ console.log(DBURL);
 mongoose.connect(DBURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-}).then(db => console.log('___Conexión existosa a la base de datos.___')
+}).then(db => console.log('__Conexión existosa a la base de datos.__')
 ).catch(err => console.log(err));
 
 //? Prueba para ver como funciona añadir un nuevo plato.

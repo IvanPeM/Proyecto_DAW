@@ -1,3 +1,5 @@
+"use strict";
+
 const mongoose = require('mongoose');
 
 // Exportar el model de los platos.
