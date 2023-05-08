@@ -14,7 +14,8 @@ require('dotenv').config();
 require('./database');
 
 //Indica donde está los archivos del frontend.
-app.use(express.static(path.join(__dirname, '../frontend/src')));
+// app.use(express.static(path.join(__dirname, '../frontend/src')));
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
     // res.send('Hola mundo!');
@@ -33,8 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-app.post('/prueba', (req, res) => {
-    // console.log("body", req.body);
+app.post('/login', (req, res) => {
+    console.log("body", req.body);
     let ob = req.body;
 });
 
