@@ -5,10 +5,10 @@ const mongoose = require('mongoose');
 // Exporto los dos models.
 const Plato = require('./model/Plato.model.js');
 const Mesa = require('./model/Mesa.model.js');
+const Usuario = require('./model/Usuario.model.js');
 
 // La URL de la base de datos
 const DBURL = process.env.MONGODB_URL;
-console.log(DBURL);
 
 // Me conencto a la base de datos.
 mongoose.connect(DBURL, {
@@ -127,3 +127,18 @@ mongoose.connect(DBURL, {
 //     .catch(err => {
 //         console.log('Error al buscar el plato: ',err);
 //     });
+
+function loguear(ob){
+    Usuario.findOne({nombre: ob.nombre})
+        .then(usuario => {
+            if (usuario) {
+                console.log(usuario);
+            } else {
+                console.log('No se encontró el usuario.');
+                return null;
+            }
+        })
+        .catch(err => {
+            console.log('Error al buscar el usuario: ',err);
+        });
+}

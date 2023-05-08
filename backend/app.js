@@ -15,7 +15,7 @@ require('./database');
 
 //Indica donde está los archivos del frontend.
 // app.use(express.static(path.join(__dirname, '../frontend/src')));
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 app.get('/', (req, res) => {
     // res.send('Hola mundo!');
@@ -37,6 +37,7 @@ app.use(express.json());
 app.post('/login', (req, res) => {
     console.log("body", req.body);
     let ob = req.body;
+    loguear(ob);
 });
 
 app.listen(process.env.PORT, () => {
