@@ -13,6 +13,11 @@ require('dotenv').config();
 // Exporto la base de datos para que inicie.
 require('./database');
 
+// Exporto todos los models para utilizarlos.
+const Plato = require('./model/Plato.model.js');
+const Mesa = require('./model/Mesa.model.js');
+const Usuario = require('./model/Usuario.model.js');
+
 //Indica donde está los archivos del frontend.
 // app.use(express.static(path.join(__dirname, '../frontend/src')));
 app.use(express.static(path.join(__dirname, '../frontend/public')));
@@ -43,3 +48,18 @@ app.post('/login', (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log("__Servidor levantado.__");
 });
+
+function carta(){
+    Plato.findOne({})
+        .then(usuario => {
+            if (usuario) {
+                console.log(usuario);
+            } else {
+                console.log('No se encontró el usuario.');
+                return null;
+            }
+        })
+        .catch(err => {
+            console.log('Error al buscar el usuario: ',err);
+        });
+}
