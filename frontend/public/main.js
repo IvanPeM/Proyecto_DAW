@@ -11,5 +11,6 @@ function getCarta() {
 }
 
 function carta(data){
-
+    const cartaData = JSON.parse(data);
+    console.log(cartaData);
 }

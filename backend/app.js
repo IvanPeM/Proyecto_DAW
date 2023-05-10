@@ -23,8 +23,8 @@ const Usuario = require('./model/Usuario.model.js');
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 app.get('/', (req, res) => {
-    // res.send('Hola mundo!');
     res.sendFile(path.join(__dirname, '../frontend/src/index.html'));
+    // res.json(carta());
 });
 
 app.get('/admin', (req, res) => {
@@ -49,11 +49,15 @@ app.listen(process.env.PORT, () => {
     console.log("__Servidor levantado.__");
 });
 
+/**
+ * Funcion para enviar todos los platos que
+ * existen de la base de datos
+ */
 function carta(){
-    Plato.findOne({})
-        .then(usuario => {
-            if (usuario) {
-                console.log(usuario);
+    Plato.find({})
+        .then(platos => {
+            if (platos) {
+                return platos;
             } else {
                 console.log('No se encontró el usuario.');
                 return null;
