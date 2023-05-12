@@ -1,6 +1,8 @@
 "use strict";
 
 const express = require('express');
+const exphbs = require('express-handlebars');
+const { engine } = require('express-handlebars');
 const cors = require('cors');
 const path = require('path');
 
@@ -18,13 +20,20 @@ const Plato = require('./model/Plato.model.js');
 const Mesa = require('./model/Mesa.model.js');
 const Usuario = require('./model/Usuario.model.js');
 
+// Configurar las plantillas Handlebars.
+app.set('views', path.join(__dirname, '../frontend/src/views'));
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+
 //Indica donde está los archivos del frontend.
 // app.use(express.static(path.join(__dirname, '../frontend/src')));
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/src/index.html'));
+    // res.sendFile(path.join(__dirname, '../frontend/src/index.html'));
     // res.json(carta());
+    let lcarta = carta();
+    res.render('index', { lcarta });
 });
 
 app.get('/admin', (req, res) => {
@@ -66,4 +75,19 @@ function carta(){
         .catch(err => {
             console.log('Error al buscar el usuario: ',err);
         });
+}
+
+function loguear(ob){
+    Usuario.findOne({nombre: ob.nombre})
+    .then(usuario => {
+        if (usuario) {
+            console.log(usuario);
+        } else {
+            console.log('No se encontró el usuario.');
+            return null;
+        }
+    })
+    .catch(err => {
+        console.log('Error al buscar el usuario: ',err);
+    });
 }

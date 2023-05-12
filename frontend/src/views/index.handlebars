@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-md bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand m-auto px-4" href="home.html">
+            <img src="" alt="icono restaurante" width="60" height="auto">
+        </a>
+    </div>
+</nav>
+<h1>prueba hbs</h1>
+<div id="listaMenu">
+    {{#each lcarta}}
+        <p>{{numero}} {{nombre}} - {{precio}}€</p>
+    {{/each}}
+</div>

@@ -128,17 +128,15 @@ mongoose.connect(DBURL, {
 //         console.log('Error al buscar el plato: ',err);
 //     });
 
-function loguear(ob){
-    Usuario.findOne({nombre: ob.nombre})
-        .then(usuario => {
-            if (usuario) {
-                console.log(usuario);
-            } else {
-                console.log('No se encontró el usuario.');
-                return null;
-            }
-        })
-        .catch(err => {
-            console.log('Error al buscar el usuario: ',err);
-        });
-}
+// Usuario.findOne({nombre: ob.nombre})
+//     .then(usuario => {
+//         if (usuario) {
+//             console.log(usuario);
+//         } else {
+//             console.log('No se encontró el usuario.');
+//             return null;
+//         }
+//     })
+//     .catch(err => {
+//         console.log('Error al buscar el usuario: ',err);
+//     });
