@@ -22,7 +22,7 @@ mongoose.connect(DBURL, {
 //     nombre: 'prueba 1',
 //     numero: 2,
 //     foto: 'plato02',
-//     precio: 0,
+//     precio: 5,
 //     ingredientes: ['Salmón','Arroz']
 // });
 
