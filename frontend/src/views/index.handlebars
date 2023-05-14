@@ -19,12 +19,15 @@
                         </div>
                         <div class="col-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{this.numero}} {{this.nombre}}</h5>
+                                <h5 class="card-title">{{this.numero}}. {{this.nombre}}</h5>
                                 <p class="card-text px-3">{{this.ingredientes}}</p>
+                                <div class="{{this.numero}}{{this.nombre}} d-flex align-items-center gap-2 my-3" style="max-width: 150px">
+                                    <button class="btn btn-primary" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                                    <input type="number" value="0" max="10" min="0" class="form-control text-center">
+                                    <button class="btn btn-primary" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                                </div>
                                 {{#if this.precio}}
                                     <a href="" class="btn btn-primary">{{this.precio}} €</a>
-                                {{else}}
-                                    <a href="" class="btn btn-primary">GRATIS</a>
                                 {{/if}}
                             </div>
                         </div>
