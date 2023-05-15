@@ -52,8 +52,12 @@ app.get('/', async (req, res) => {
     }
 });
 
-app.get('/admin', (req, res) => {
+app.get('/login', (req, res) => {
     // res.send('Hola mundo!');
+    res.sendFile(path.join(__dirname, '../frontend/src/login.html'));
+});
+
+app.get('/login/admin', async (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/src/login.html'));
 });
 
@@ -80,6 +84,7 @@ function loguear(ob){
     .then(usuario => {
         if (usuario) {
             console.log(usuario);
+            return usuario;
         } else {
             console.log('No se encontró el usuario.');
             return null;
