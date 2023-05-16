@@ -35,8 +35,6 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
 app.get('/', async (req, res) => {
-    // res.sendFile(path.join(__dirname, '../frontend/src/index.html'));
-    // res.json(carta());
 
     try {
         const platos = await Plato.find({});
@@ -58,7 +56,18 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/login/admin', async (req, res) => {
-    res.sendFile(path.join(__dirname, '../frontend/src/login.html'));
+    try {
+        const platos = await Plato.find({});
+        if (platos) {
+            res.render('admin', { lcarta: platos });
+        } else {
+            console.log('No se encontraron platos.');
+            res.render('admin', { lcarta: null });
+        }
+    } catch (error) {
+        console.log('Error al buscar los platos:', error);
+        res.render('admin', { lcarta: null });
+    }
 });
 
 app.use(cors());
@@ -71,7 +80,14 @@ app.use(express.json());
 app.post('/login', (req, res) => {
     console.log("body", req.body);
     let ob = req.body;
-    loguear(ob);
+    let login = loguear(ob);
+    if(login != null){
+        console.log('entro');
+        res.redirect('/login/admin');
+    }else{
+        console.log('no entro');
+        console.log(login);
+    }
 });
 
 app.listen(process.env.PORT, () => {
