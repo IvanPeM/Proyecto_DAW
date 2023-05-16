@@ -77,11 +77,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     console.log("body", req.body);
     let ob = req.body;
-    let login = loguear(ob);
-    if(login != null){
+    let login = await loguear(ob);
+    if(login){
         console.log('entro');
         res.redirect('/login/admin');
     }else{
@@ -95,15 +95,15 @@ app.listen(process.env.PORT, () => {
 });
 
 
-function loguear(ob){
+async function loguear(ob){
     Usuario.findOne({nombre: ob.nombre})
     .then(usuario => {
         if (usuario) {
-            console.log(usuario);
-            return usuario;
+            console.log('usuario',usuario);
+            return true;
         } else {
             console.log('No se encontró el usuario.');
-            return null;
+            return false;
         }
     })
     .catch(err => {
