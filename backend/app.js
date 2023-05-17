@@ -8,6 +8,7 @@ const path = require('path');
 
 // Empezar a inicializar con el comando node .\backend\app.js
 const app = express();
+app.use(cors());
 
 // Exportar dotenv para que funcione .env
 require('dotenv').config();
@@ -37,7 +38,7 @@ app.use(express.static(path.join(__dirname, '../frontend/public')));
 app.get('/', async (req, res) => {
 
     try {
-        const platos = await Plato.find({});
+        let platos = await Plato.find({});
         if (platos) {
             res.render('index', { lcarta: platos });
         } else {
@@ -57,7 +58,7 @@ app.get('/login', (req, res) => {
 
 app.get('/login/admin', async (req, res) => {
     try {
-        const platos = await Plato.find({});
+        let platos = await Plato.find({});
         if (platos) {
             res.render('admin', { lcarta: platos });
         } else {
@@ -80,33 +81,15 @@ app.use(express.json());
 app.post('/login', async (req, res) => {
     console.log("body", req.body);
     let ob = req.body;
-    let login = await loguear(ob);
-    if(login){
-        console.log('entro');
+    let usuario = await Usuario.findOne({ nombre: ob.nombre, pass: ob.pass });
+    if (usuario) {
+        console.log('usuario', usuario);
         res.redirect('/login/admin');
-    }else{
-        console.log('no entro');
-        console.log(login);
+    } else {
+        console.log('No se encontró el usuario.');
     }
 });
 
 app.listen(process.env.PORT, () => {
     console.log("__Servidor levantado.__");
 });
-
-
-async function loguear(ob){
-    Usuario.findOne({nombre: ob.nombre})
-    .then(usuario => {
-        if (usuario) {
-            console.log('usuario',usuario);
-            return true;
-        } else {
-            console.log('No se encontró el usuario.');
-            return false;
-        }
-    })
-    .catch(err => {
-        console.log('Error al buscar el usuario: ',err);
-    });
-}
