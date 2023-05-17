@@ -5,9 +5,10 @@ $('form').submit((e) => {
     let nombre = $('#nombre').val();
     let pass = $('#pass').val();
     $.post("http://127.0.0.1:3000/login", { nombre: nombre, pass: pass }, (data) => {
-        const reloadUsingLocationHash = () => {
-            window.location.hash = "reload";
+        if (data.redirectUrl) {
+            window.location.href = data.redirectUrl;
+        } else {
+            console.log('No se encontró el usuario.');
         }
-        window.onload = reloadUsingLocationHash();
     });
 });

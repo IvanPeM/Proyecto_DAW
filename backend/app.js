@@ -84,7 +84,7 @@ app.post('/login', async (req, res) => {
     let usuario = await Usuario.findOne({ nombre: ob.nombre, pass: ob.pass });
     if (usuario) {
         console.log('usuario', usuario);
-        res.redirect('/login/admin');
+        res.json({ redirectUrl: '/login/admin' });
     } else {
         console.log('No se encontró el usuario.');
     }
