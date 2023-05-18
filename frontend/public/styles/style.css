@@ -1,3 +1,11 @@
 body{
     overflow-x: hidden;
 }
+
+i {
+    cursor: pointer;
+}
+
+i:hover{
+    scale: 1.3;
+}

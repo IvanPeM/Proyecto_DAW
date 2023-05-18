@@ -30,39 +30,43 @@
 </nav>
 <h1 class="text-center p-3">Admin</h1>
 <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-12 col-md-10">
-                <div id="tabla" class="m-5">
-                    <form id="fEditar">
-                        <table class="table table-striped table-responsive-sm">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+            <div id="tabla" class="m-5">
+                <form id="fEditarEliminar">
+                    <table class="table table-striped table-responsive-sm">
+                        <tr>
+                            <th class="text-white">Número</th>
+                            <th class="text-white">Nombre</th>
+                            <th class="text-white">Precio</th>
+                            <th class="text-white">Foto</th>
+                            <th class="text-white">Ingredientes</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        {{#each lcarta}}
+
                             <tr>
-                                <th class="text-white">Número</th>
-                                <th class="text-white">Nombre</th>
-                                <th class="text-white">Precio</th>
-                                <th class="text-white">Foto</th>
-                                <th class="text-white">Ingredientes</th>
-                                <th></th>
-                                <th></th>
+                                <td class="text-light" id="numero">{{this.numero}}</td>
+                                <td class="text-light" id="{{this.numero}}nombre">{{this.nombre}}</td>
+                                <td class="text-light" id="{{this.numero}}precio">{{this.precio}}</td>
+                                <td class="text-light" id="{{this.numero}}foto">{{this.foto}}</td>
+                                <td class="text-light" id="{{this.numero}}ingredientes">{{this.ingredientes}}</td>
+                                <td class="text-light" id="{{this.numero}}editar">
+                                    <i onclick="editar('{{this.numero}}','{{this.nombre}}','{{this.precio}}','{{this.foto}}','{{this.ingredientes}}')" class="fa-solid fa-pencil"></i>
+                                </td>
+                                <td class="text-light">
+                                    <i onclick="eliminar({{this.numero}})" class="fa-solid fa-trash"></i>
+                                </td>
                             </tr>
-                            {{#each lcarta}}
 
-                                <tr>
-                                    <td class="text-light">{{this.numero}}</td>
-                                    <td class="text-light">{{this.nombre}}</td>
-                                    <td class="text-light">{{this.precio}}</td>
-                                    <td class="text-light">{{this.foto}}</td>
-                                    <td class="text-light">{{this.ingredientes}}</td>
-                                    <td class="text-light">
-                                        <i id="edit{{this.numero}}" class="fa-solid fa-pencil"></i>
-                                    </td>
-                                    <td class="text-light"><i id="delete{{this.numero}}" class="fa-solid fa-trash"></i></td>
-                                </tr>
+                        {{/each}}
+                    </table>
 
-                            {{/each}}
-                        </table>
-
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+<script src="/admin.js"></script>

@@ -90,6 +90,14 @@ app.post('/login', async (req, res) => {
     }
 });
 
+app.post('/editar-plato', async (req, res) => {
+    console.log(req.body);
+});
+
+app.post('/eliminar-plato', async (req, res) => {
+    console.log(req.body);
+});
+
 app.listen(process.env.PORT, () => {
     console.log("__Servidor levantado.__");
 });
