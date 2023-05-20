@@ -79,11 +79,9 @@ app.use(express.json());
 
 
 app.post('/login', async (req, res) => {
-    console.log("body", req.body);
     let ob = req.body;
     let usuario = await Usuario.findOne({ nombre: ob.nombre, pass: ob.pass });
     if (usuario) {
-        console.log('usuario', usuario);
         res.json({ redirectUrl: '/login/admin' });
     } else {
         console.log('No se encontró el usuario.');

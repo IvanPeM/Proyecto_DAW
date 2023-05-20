@@ -15,6 +15,18 @@ $('#fEditarEliminar').submit((e) => {
     });
 });
 
+$('#bNuevo').click( (e) => { 
+    e.preventDefault();
+    let contenido = '<form class="form-inline" id="fNuevo">';
+    contenido += '<input type="text" class="form-control" id="nombre" placeholder="Escribe el nombre" name="nombre">';
+    contenido += '<input type="number" class="form-control" id="precio" placeholder="Escribe el precio" name="precio">';
+    contenido += '<input type="file" class="form-control" id="foto" placeholder="Adjunto la foto" name="foto">';
+    contenido += '<input type="text" class="form-control" id="ingredientes" placeholder="Escribe los ingredientes" name="ingredientes">';
+    contenido += `<input type="submit" name="Editar" value="Aceptar">`;
+    contenido += '</form>';
+    $('#divNuevo').append(contenido);
+});
+
 function editar(numero, nombre, precio, foto, ingredientes){
     console.log(numero);
     let td = document.getElementById(`${numero}nombre`);
@@ -25,7 +37,7 @@ function editar(numero, nombre, precio, foto, ingredientes){
 
     //En cada td existente se le añade los inputs para que puedas modificar.
     td.innerHTML = `<input type="text" id="nombre" name="nombre" value="${nombre}" readonly="readonly">`;
-    td1.innerHTML = `<input type="text" id="precio" name="precio" value="${precio}">`;
+    td1.innerHTML = `<input type="number" id="precio" name="precio" value="${precio}">`;
     td2.innerHTML = `<input type="text" id="foto" name="foto" value="${foto}">`;
     td3.innerHTML = `<input type="text" id="ingrediente" name="ingredientes" value="${ingredientes}">`;
     td4.innerHTML = `<input type="submit" name="Editar" value="Aceptar">`;
