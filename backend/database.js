@@ -19,11 +19,11 @@ mongoose.connect(DBURL, {
 
 //? Prueba para ver como funciona añadir un nuevo plato.
 // const pruebaPlato = new Plato({
-//     nombre: 'prueba 1',
+//     nombre: 'prueba 2',
 //     numero: 2,
-//     foto: 'plato02',
-//     precio: 5,
-//     ingredientes: ['Salmón','Arroz']
+//     foto: 'plato02.jpg',
+//     precio: 0,
+//     ingredientes: 'Salmón,Arroz'
 // });
 
 // const pruebaMesa = new Mesa({

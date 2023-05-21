@@ -8,7 +8,7 @@ const platoSchema = new mongoose.Schema({
     foto: String,
     precio: {type: Number,require: true},
     ingredientes: {type: String,require: true}
-});
+},{timestamps: true});
 
 const Plato = mongoose.model('Plato', platoSchema);
 

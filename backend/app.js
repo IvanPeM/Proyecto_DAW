@@ -89,11 +89,72 @@ app.post('/login', async (req, res) => {
 });
 
 app.post('/editar-plato', async (req, res) => {
-    console.log(req.body);
+    let ob = req.body;
+    Plato.findOne({ numero: ob.numero })
+        .then(plato => {
+            if (plato) {
+                plato.nombre = ob.nombre;
+                plato.precio = ob.precio;
+                plato.foto = ob.foto;
+                plato.ingredientes = ob.ingredientes;
+
+                return plato.save()
+                    .then(platoGuardado => {
+                        res.json({ redirectUrl: '/login/admin' });
+                    })
+                    .catch(error => {
+                        console.log('Error al editar el plato:', error);
+                    });
+            } else {
+                console.log('No se encontró el plato');
+                return null;
+            }   
+        })
+        .catch(err => {
+            console.log('Error al buscar la mesa: ',err);
+        });
 });
 
 app.post('/eliminar-plato', async (req, res) => {
-    console.log(req.body);
+    let ob = req.body;
+    Plato.findOne({ numero: ob.numero })
+        .then(plato => {
+            if (plato) {
+                return plato.deleteOne()
+                    .then(() => {
+                        res.json({ redirectUrl: '/login/admin' });
+                    })
+                    .catch(err => {
+                        console.log('Error al eliminar el plato:', err);
+                    });
+            } else {
+                console.log('No se encontró el plato');
+                return null;
+            }
+        })
+        .catch(err => {
+            console.log('Error al buscar el plato: ',err);
+        });
+});
+
+app.post('/add-plato', async (req, res) => {
+    let ob = req.body;
+    const ultimoPlato = await Plato.findOne().sort({ createdAt: -1 });
+    let numero = ultimoPlato.numero + 1;
+    const anhadirPlato = new Plato({
+        nombre: ob.nombre,
+        numero: numero,
+        foto: ob.foto,
+        precio: ob.precio,
+        ingredientes: ob.ingredientes
+    });
+    anhadirPlato.save()
+    .then(platoGuardado => {
+        res.json({ redirectUrl: '/login/admin' });
+    })
+    .catch(err => {
+        console.log('Error al guardar el plato:', err);
+    });
 });
 
 app.listen(process.env.PORT, () => {
