@@ -72,17 +72,26 @@ app.get('/login/admin', async (req, res) => {
 });
 
 app.get('/login/admin/pendientes', async (req, res) => {
+    let platos = [];
     try {
         let mesas = await Mesa.find({});
+        for (let mesa of mesas) {
+            for (let pedido of mesas.pedidos) {
+                let plato = await Plato.findOne({ _id: mesa.pedidos });
+                if (plato) {
+                    platos.push(plato);
+                }
+            }
+        }
         if (mesas) {
-            res.render('pedidos', { lmesa: mesas });
+            res.render('pedidos', { lmesa: mesas, lplato: platos });
         } else {
             console.log('No se encontraron mesas.');
-            res.render('pedidos', { lmesa: null });
+            res.render('pedidos', { lmesa: null, lplato: platos });
         }
     } catch (error) {
         console.log('Error al buscar las mesas:', error);
-        res.render('pedidos', { lmesa: null });
+        res.render('pedidos', { lmesa: null, lplato: platos });
     }
 });
 
@@ -185,6 +194,17 @@ app.post('/add-plato', async (req, res) => {
     .catch(err => {
         console.log('Error al guardar el plato:', err);
     });
+});
+
+app.post('/recibir-plato', async (req, res) => {
+    let ob = req.body;
+    console.log(ob);
+    // let usuario = await Usuario.findOne({ nombre: ob.nombre, pass: ob.pass });
+    // if (usuario) {
+    //     res.json({ redirectUrl: '/login/admin/pendientes' });
+    // } else {
+    //     console.log('No se encontró el usuario.');
+    // }
 });
 
 app.listen(process.env.PORT, () => {
