@@ -71,6 +71,36 @@ app.get('/login/admin', async (req, res) => {
     }
 });
 
+app.get('/login/admin/pendientes', async (req, res) => {
+    try {
+        let mesas = await Mesa.find({});
+        if (mesas) {
+            res.render('pedidos', { lmesas: mesas });
+        } else {
+            console.log('No se encontraron mesas.');
+            res.render('pedidos', { lmesas: null });
+        }
+    } catch (error) {
+        console.log('Error al buscar las mesas:', error);
+        res.render('pedidos', { lmesas: null });
+    }
+});
+
+app.get('/login/admin/recibidos', async (req, res) => {
+    try {
+        let mesas = await Mesa.find({});
+        if (mesas) {
+            res.render('recibidos', { lmesas: mesas });
+        } else {
+            console.log('No se encontraron mesas.');
+            res.render('recibidos', { lmesas: null });
+        }
+    } catch (error) {
+        console.log('Error al buscar las mesas:', error);
+        res.render('recibidos', { lmesas: null });
+    }
+});
+
 app.use(cors());
 
 //Para entender la informacion de un formulario.
