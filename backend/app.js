@@ -75,14 +75,14 @@ app.get('/login/admin/pendientes', async (req, res) => {
     try {
         let mesas = await Mesa.find({});
         if (mesas) {
-            res.render('pedidos', { lmesas: mesas });
+            res.render('pedidos', { lmesa: mesas });
         } else {
             console.log('No se encontraron mesas.');
-            res.render('pedidos', { lmesas: null });
+            res.render('pedidos', { lmesa: null });
         }
     } catch (error) {
         console.log('Error al buscar las mesas:', error);
-        res.render('pedidos', { lmesas: null });
+        res.render('pedidos', { lmesa: null });
     }
 });
 
@@ -90,14 +90,14 @@ app.get('/login/admin/recibidos', async (req, res) => {
     try {
         let mesas = await Mesa.find({});
         if (mesas) {
-            res.render('recibidos', { lmesas: mesas });
+            res.render('recibidos', { lmesa: mesas });
         } else {
             console.log('No se encontraron mesas.');
-            res.render('recibidos', { lmesas: null });
+            res.render('recibidos', { lmesa: null });
         }
     } catch (error) {
         console.log('Error al buscar las mesas:', error);
-        res.render('recibidos', { lmesas: null });
+        res.render('recibidos', { lmesa: null });
     }
 });
 

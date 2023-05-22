@@ -1,3 +1,4 @@
+<title>Platos Pedidos</title>
 <nav class="navbar bg-dark navbar-expand-md" data-bs-theme="dark">
     <div class="container-fluid">
         <a class="navbar-brand m-auto" href="/">
@@ -29,3 +30,13 @@
     </div>
 </nav>
 <h1 class="text-center p-3">Platos Pedidos</h1>
+<div class="p-5">
+    {{#each lmesa}}
+        <h1 class="mt-3">Mesa {{this.numero}}</h1>
+        <hr>
+        <p>Nº personas: {{this.personas}}</p>
+        {{#each this.pedidos}}
+            <p>{{this}}</p>
+        {{/each}}
+    {{/each}}
+</div>
