@@ -77,7 +77,7 @@ app.get('/login/admin/pendientes', async (req, res) => {
         let mesas = await Mesa.find({});
         for (let mesa of mesas) {
             for (let pedido of mesa.pedidos) {
-                let plato = await Plato.findOne({ _id: mesa.pedidos });
+                let plato = await Plato.findOne({ _id: pedido });
                 if (plato) {
                     platos.push(plato);
                 }
