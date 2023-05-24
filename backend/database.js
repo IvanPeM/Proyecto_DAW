@@ -27,9 +27,9 @@ mongoose.connect(DBURL, {
 // });
 
 // const pruebaMesa = new Mesa({
-//     numero: 1,
-//     personas: 4,
-//     URL: 'plato01',
+//     numero: 2,
+//     personas: 2,
+//     URL: 'plato02',
 //     pedidos: [],
 //     recibidos: []
 // });

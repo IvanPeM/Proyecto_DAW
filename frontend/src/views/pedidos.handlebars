@@ -30,22 +30,22 @@
     </div>
 </nav>
 <h1 class="text-center p-3">Platos Pedidos</h1>
-<div class="p-5">
-    {{#each lmesa}}
+{{#each lmesa}}
+    <div class="px-5 py-3">
         <div class="px-3">
             <h1 class="mt-3">Mesa {{this.numero}}</h1>
             <hr>
             <p>Nº personas: {{this.personas}}</p>
             <ul>
-                {{#each ../lplato}}
+                {{#each (lookup ../lplato this.numero)}}
                     <li>
                         {{this.numero}}: {{this.nombre}}
-                        <button onclick="recibido({{this.numero}})" class="ms-3 btn btn-success">Recibido</button>
+                        <button onclick="recibido({{../this.numero}}, {{this.numero}})" class="ms-3 btn btn-success">Recibido</button>
                     </li>
                 {{/each}}
             </ul>
         </div>
-    {{/each}}
-</div>
+    </div>
+{{/each}}
 
 <script src="/pedidos.js"></script>
