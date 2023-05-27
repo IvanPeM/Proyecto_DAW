@@ -210,31 +210,24 @@ app.post('/add-plato', async (req, res) => {
 app.post('/recibir-plato', async (req, res) => {
     let ob = req.body;
     console.log(ob);
-    let mesa = await Mesa.findOne({numero:ob.numeroMesa});
-    if (mesa) {
-        
-    } else {
-        console.log('No se encontró la mesa.');
-    }
     try {
-        let mesas = await Mesa.findOne({numero:ob.numeroMesa});
-        for (let mesa of mesas) {
-            for (let pedido of mesa.recibidos) {
+        let mesa = await Mesa.findOne({numero:ob.numeroMesa});
+        if (mesa) {
+            for (let pedido of mesa.pedidos) {
                 let plato = await Plato.findOne({ _id: pedido });
-                if (plato.numero == numeroPlato) {
-                    
+                console.log(plato);
+                if (plato.numero.toString() == ob.numeroPlato) {
+                    console.log('entro');
                 }
             }
-        }
-        if (mesas) {
-            res.render('recibidos', { lmesa: mesas, lplato: platos });
+            // res.json({ redirectUrl: '/login/admin/pendientes' });
         } else {
             console.log('No se encontraron mesas.');
-            res.render('recibidos', { lmesa: null, lplato: platos });
+            res.json({ redirectUrl: '/login/admin/pendientes' });
         }
     } catch (error) {
         console.log('Error al buscar las mesas:', error);
-        res.render('recibidos', { lmesa: null, lplato: platos });
+        res.json({ redirectUrl: '/login/admin/pendientes' });
     }
 
 });
