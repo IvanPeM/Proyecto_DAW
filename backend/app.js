@@ -97,17 +97,27 @@ app.get('/login/admin/pendientes', async (req, res) => {
 });
 
 app.get('/login/admin/recibidos', async (req, res) => {
+    let platos = {};
     try {
         let mesas = await Mesa.find({});
+        for (let mesa of mesas) {
+            platos[mesa.numero] = [];
+            for (let pedido of mesa.recibidos) {
+                let plato = await Plato.findOne({ _id: pedido });
+                if (plato) {
+                    platos[mesa.numero].push(plato);
+                }
+            }
+        }
         if (mesas) {
-            res.render('recibidos', { lmesa: mesas });
+            res.render('recibidos', { lmesa: mesas, lplato: platos });
         } else {
             console.log('No se encontraron mesas.');
-            res.render('recibidos', { lmesa: null });
+            res.render('recibidos', { lmesa: null, lplato: platos });
         }
     } catch (error) {
         console.log('Error al buscar las mesas:', error);
-        res.render('recibidos', { lmesa: null });
+        res.render('recibidos', { lmesa: null, lplato: platos });
     }
 });
 
@@ -200,12 +210,33 @@ app.post('/add-plato', async (req, res) => {
 app.post('/recibir-plato', async (req, res) => {
     let ob = req.body;
     console.log(ob);
-    // let usuario = await Usuario.findOne({ nombre: ob.nombre, pass: ob.pass });
-    // if (usuario) {
-    //     res.json({ redirectUrl: '/login/admin/pendientes' });
-    // } else {
-    //     console.log('No se encontró el usuario.');
-    // }
+    let mesa = await Mesa.findOne({numero:ob.numeroMesa});
+    if (mesa) {
+        
+    } else {
+        console.log('No se encontró la mesa.');
+    }
+    try {
+        let mesas = await Mesa.findOne({numero:ob.numeroMesa});
+        for (let mesa of mesas) {
+            for (let pedido of mesa.recibidos) {
+                let plato = await Plato.findOne({ _id: pedido });
+                if (plato.numero == numeroPlato) {
+                    
+                }
+            }
+        }
+        if (mesas) {
+            res.render('recibidos', { lmesa: mesas, lplato: platos });
+        } else {
+            console.log('No se encontraron mesas.');
+            res.render('recibidos', { lmesa: null, lplato: platos });
+        }
+    } catch (error) {
+        console.log('Error al buscar las mesas:', error);
+        res.render('recibidos', { lmesa: null, lplato: platos });
+    }
+
 });
 
 app.listen(process.env.PORT, () => {
