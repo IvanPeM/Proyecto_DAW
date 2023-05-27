@@ -98,6 +98,7 @@ app.get('/login/admin/pendientes', async (req, res) => {
 
 app.get('/login/admin/recibidos', async (req, res) => {
     let platos = {};
+    let precio = 0;
     try {
         let mesas = await Mesa.find({});
         for (let mesa of mesas) {
@@ -106,18 +107,19 @@ app.get('/login/admin/recibidos', async (req, res) => {
                 let plato = await Plato.findOne({ _id: pedido });
                 if (plato) {
                     platos[mesa.numero].push(plato);
+                    precio += plato.precio;
                 }
             }
         }
         if (mesas) {
-            res.render('recibidos', { lmesa: mesas, lplato: platos });
+            res.render('recibidos', { lmesa: mesas, lplato: platos, precio:precio });
         } else {
             console.log('No se encontraron mesas.');
-            res.render('recibidos', { lmesa: null, lplato: platos });
+            res.render('recibidos', { lmesa: null, lplato: platos, precio:precio });
         }
     } catch (error) {
         console.log('Error al buscar las mesas:', error);
-        res.render('recibidos', { lmesa: null, lplato: platos });
+        res.render('recibidos', { lmesa: null, lplato: platos, precio:precio });
     }
 });
 
@@ -213,11 +215,21 @@ app.post('/recibir-plato', async (req, res) => {
     try {
         let mesa = await Mesa.findOne({numero:ob.numeroMesa});
         if (mesa) {
-            for (let pedido of mesa.pedidos) {
-                let plato = await Plato.findOne({ _id: pedido });
+            for (let i = 0; i < mesa.pedidos.length; i++) {
+                let plato = await Plato.findOne({ _id: mesa.pedidos[i] });
                 console.log(plato);
-                if (plato.numero.toString() == ob.numeroPlato) {
+                if (plato.numero == ob.numeroPlato) {
                     console.log('entro');
+                    mesa.recibidos.push(mesa.pedidos[i]);
+                    mesa.pedidos.splice(i,1);
+                    console.log(mesa);
+                    mesa.save()
+                        .then(platoGuardado => {
+                            console.log('Plato editado:', platoGuardado);
+                        })
+                        .catch(error => {
+                            console.log('Error al editar el plato:', error);
+                        });
                 }
             }
             // res.json({ redirectUrl: '/login/admin/pendientes' });

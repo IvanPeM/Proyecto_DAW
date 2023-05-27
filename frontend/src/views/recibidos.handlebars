@@ -36,7 +36,7 @@
             <h1 class="mt-3">Mesa {{this.numero}}</h1>
             <hr>
             <p>Nº personas: {{this.personas}}</p>
-            {{#if (lookup ../plato this.numero)}}
+            {{!-- {{#if (lookup ../plato this.numero)}} --}}
                 <ul>
                     {{#each (lookup ../lplato this.numero)}}
                         <li>
@@ -44,9 +44,10 @@
                         </li>
                     {{/each}}
                 </ul>
-            {{else}}
-                <p class="text-center">Aún no ha recibido ningún plato la mesa {{this.numero}}</p>
-            {{/if}}
+            {{!-- {{else}} --}}
+                {{!-- <p class="text-center">Aún no ha recibido ningún plato la mesa {{this.numero}}</p> --}}
+            {{!-- {{/if}} --}}
+            <p>Cuenta: {{precio}}</p>
         </div>
     </div>
 {{/each}}
