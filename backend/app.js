@@ -59,7 +59,6 @@ app.get('/mesa/:id', async (req, res) => {
         let platos = await Plato.find({});
         if (mesa) {
             res.render('menu', { lcarta: platos, mesa:mesa });
-            // res.json({ mesa });
         } else {
             res.status(404).json({ error: 'Mesa no encontrada' });
         }
