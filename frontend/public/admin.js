@@ -22,7 +22,6 @@ $('#fNuevo').submit((e) => {
     let precio = $('#precio').val();
     let foto = $('#foto').prop('files')[0].name;
     let ingredientes = $('#ingredientes').val();
-    console.log(foto);
     $.post("http://127.0.0.1:3000/add-plato", { nombre: nombre, precio: precio, foto:foto, ingredientes:ingredientes }, (data) => {
         if (data.redirectUrl) {
             window.location.href = data.redirectUrl;
@@ -34,7 +33,6 @@ $('#fNuevo').submit((e) => {
 
 $('#bNuevo').click( (e) => {
     e.preventDefault();
-    // let contenido = '<form class="row g-3 mx-auto my-3" id="fNuevo">';
     let contenido = '<div class="col-auto">';
     contenido += '<input type="text" class="form-control" id="nombre" placeholder="Escribe el nombre" name="nombre"></div>';
     contenido += '<div class="col-auto">';
@@ -45,7 +43,6 @@ $('#bNuevo').click( (e) => {
     contenido += '<input type="text" class="form-control" id="ingredientes" placeholder="Escribe los ingredientes" name="ingredientes"></div>';
     contenido += '<div class="col-auto">';
     contenido += `<input type="submit" class="btn btn-success" name="Editar" value="Aceptar"></div>`;
-    // contenido += '</form>';
     $('#fNuevo').append(contenido);
 });
 

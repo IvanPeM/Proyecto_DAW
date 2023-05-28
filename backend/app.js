@@ -259,6 +259,28 @@ app.post('/recibir-plato', async (req, res) => {
 
 });
 
+app.post('/add-mesa', async (req, res) => {
+    let ob = req.body;
+    let mesa = await Mesa.findOne({numero:ob.numero});
+    if (!mesa) {
+        const anhadirMesa = new Mesa({
+            numero: ob.numero,
+            personas: ob.personas,
+            URL: `plato${ob.numero}`,
+            pedidos: [],
+            recibidos: []
+        });
+        
+        anhadirMesa.save()
+        .then(platoGuardado => {
+            res.json({ redirectUrl: '/login/admin/mesas' });
+        })
+        .catch(err => {
+            console.log('Error al guardar la mesa:', err);
+        });
+    }
+});
+
 app.listen(process.env.PORT, () => {
     console.log("__Servidor levantado.__");
 });
