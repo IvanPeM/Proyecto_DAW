@@ -51,8 +51,24 @@ app.get('/', async (req, res) => {
     }
 });
 
+app.get('/mesa/:id', async (req, res) => {
+    const mesaId = req.params.id;
+    
+    try {
+        const mesa = await Mesa.findOne({ _id: mesaId });
+        let platos = await Plato.find({});
+        if (mesa) {
+            res.render('menu', { lcarta: platos, mesa:mesa });
+            // res.json({ mesa });
+        } else {
+            res.status(404).json({ error: 'Mesa no encontrada' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener la mesa' });
+    }
+});
+
 app.get('/login', (req, res) => {
-    // res.send('Hola mundo!');
     res.sendFile(path.join(__dirname, '../frontend/src/login.html'));
 });
 

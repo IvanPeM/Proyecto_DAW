@@ -7,7 +7,7 @@
         </a>
     </div>
 </nav>
-<h1 class="text-center p-5">Menús</h1>
+<h1 class="text-center p-5">Menús mesa {{mesa.numero}}</h1>
 <div id="listaMenu">
     <div class="row p-5">
         {{#each lcarta}}
@@ -22,6 +22,14 @@
                             <div class="card-body">
                                 <h5 class="card-title text-white">{{this.numero}}. {{this.nombre}}</h5>
                                 <p class="card-text px-3 text-white">{{this.ingredientes}}</p>
+                                <div class="{{this.numero}}{{this.nombre}} d-flex align-items-center gap-2 my-3" style="max-width: 150px">
+                                    <button class="btn btn-primary" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+                                    <input type="number" value="0" max="10" min="0" class="form-control text-center">
+                                    <button class="btn btn-primary" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+                                </div>
+                                {{#if this.precio}}
+                                    <a href="" class="btn btn-primary">{{this.precio}} €</a>
+                                {{/if}}
                             </div>
                         </div>
                     </div>
@@ -32,12 +40,10 @@
     </div>
 </div>
 
+<a href="/seleccionar-comida" style="position:fixed;" class="button-fixed">Realizar pedido</a>
+
 <footer class="p-4 m-0 border-0 bg-dark">
     <div class="nuevo position-relative pt-5">
-        <div class="position-absolute top-50 start-50 translate-middle">
-            <button class="btn btn-success"><a href="/login" class="text-white link-underline link-underline-opacity-0">Portal de Gestión</a></button>
-        </div>
+        
     </div>
 </footer>
-
-<script src="/main.js"></script>
