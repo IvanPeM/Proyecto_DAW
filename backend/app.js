@@ -96,9 +96,24 @@ app.get('/login/admin/pendientes', async (req, res) => {
     }
 });
 
+app.get('/login/admin/mesas', async (req, res) => {
+    try {
+        let mesas = await Mesa.find({});
+        if (mesas) {
+            res.render('mesas', { lmesa: mesas });
+        } else {
+            console.log('No se encontraron mesas.');
+            res.render('mesas', { lmesa: null });
+        }
+    } catch (error) {
+        console.log('Error al buscar las mesas:', error);
+        res.render('mesas', { lmesa: null });
+    }
+});
+
 app.get('/login/admin/recibidos', async (req, res) => {
     let platos = {};
-    let precio = 0;
+    let precio = {};
     try {
         let mesas = await Mesa.find({});
         for (let mesa of mesas) {
@@ -107,19 +122,19 @@ app.get('/login/admin/recibidos', async (req, res) => {
                 let plato = await Plato.findOne({ _id: pedido });
                 if (plato) {
                     platos[mesa.numero].push(plato);
-                    precio += plato.precio;
+                    precio[mesa.numero]= plato.precio;
                 }
             }
         }
         if (mesas) {
-            res.render('recibidos', { lmesa: mesas, lplato: platos, precio:precio });
+            res.render('recibidos', { lmesa: mesas, lplato: platos, Mprecio:precio });
         } else {
             console.log('No se encontraron mesas.');
-            res.render('recibidos', { lmesa: null, lplato: platos, precio:precio });
+            res.render('recibidos', { lmesa: null, lplato: platos, Mprecio:precio });
         }
     } catch (error) {
         console.log('Error al buscar las mesas:', error);
-        res.render('recibidos', { lmesa: null, lplato: platos, precio:precio });
+        res.render('recibidos', { lmesa: null, lplato: platos, Mprecio:precio });
     }
 });
 
