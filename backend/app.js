@@ -56,9 +56,10 @@ app.get('/mesa/:id', async (req, res) => {
     
     try {
         const mesa = await Mesa.findOne({ _id: mesaId });
+        let ultimoPlato = await Plato.findOne().sort({ createdAt: -1 });
         let platos = await Plato.find({});
         if (mesa) {
-            res.render('menu', { lcarta: platos, mesa:mesa });
+            res.render('menu', { lcarta: platos, mesa: mesa, ultimo: ultimoPlato });
         } else {
             res.status(404).json({ error: 'Mesa no encontrada' });
         }

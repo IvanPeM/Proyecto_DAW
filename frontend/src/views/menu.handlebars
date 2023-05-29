@@ -24,9 +24,9 @@
                             <div class="card-body">
                                 <h5 class="card-title text-white">{{this.numero}}. {{this.nombre}}</h5>
                                 <p class="card-text px-3 text-white">{{this.ingredientes}}</p>
-                                <div class="{{this.numero}}{{this.nombre}} d-flex align-items-center gap-2 my-3" style="max-width: 150px">
+                                <div class="d-flex align-items-center gap-2 my-3" style="max-width: 150px">
                                     <button class="btn btn-primary" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
-                                    <input type="number" value="0" max="10" min="0" class="form-control text-center">
+                                    <input type="number" value="0" max="10" min="0" class="form-control text-center plato{{this.numero}}">
                                     <button class="btn btn-primary" type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
                                 </div>
                                 {{#if this.precio}}
@@ -42,10 +42,12 @@
     </div>
 </div>
 
-<button class="floating-button btn btn-success">Pedir</button>
+<button class="floating-button btn btn-success" onclick="pedir({{ultimo.numero}})">Pedir</button>
 
 <footer class="p-4 m-0 border-0 bg-dark">
     <div class="nuevo position-relative pt-5">
         
     </div>
 </footer>
+
+<script src="/menu.js"></script>
