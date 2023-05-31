@@ -136,11 +136,14 @@ app.get('/login/admin/recibidos', async (req, res) => {
         let mesas = await Mesa.find({});
         for (let mesa of mesas) {
             platos[mesa.numero] = [];
+            precio[mesa.numero]= 0;
             for (let pedido of mesa.recibidos) {
-                let plato = await Plato.findOne({ _id: pedido });
+                let plato = await Plato.findOne({ _id: pedido.plato });
                 if (plato) {
-                    platos[mesa.numero].push(plato);
-                    precio[mesa.numero]= plato.precio;
+                    for (let i = 0; i < pedido.cantidad; i++) {
+                        platos[mesa.numero].push(plato);
+                        precio[mesa.numero]+= plato.precio;
+                    }
                 }
             }
         }
@@ -244,16 +247,14 @@ app.post('/add-plato', async (req, res) => {
 
 app.post('/recibir-plato', async (req, res) => {
     let ob = req.body;
-    console.log(ob);
     try {
         let mesa = await Mesa.findOne({numero:ob.numeroMesa});
         if (mesa) {
             for (let i = 0; i < mesa.pedidos.length; i++) {
-                let plato = await Plato.findOne({ _id: mesa.pedidos[i] });
+                let plato = await Plato.findOne({ _id: mesa.pedidos[i].plato });
                 if (plato.numero == ob.numeroPlato) {
-                    mesa.recibidos.push(mesa.pedidos[i]);
+                    mesa.recibidos.push({plato: mesa.pedidos[i].plato, cantidad: mesa.pedidos[i].cantidad});
                     mesa.pedidos.splice(i,1);
-                    console.log(mesa);
                     mesa.save()
                         .then(platoGuardado => {
                             console.log('Plato editado:', platoGuardado);
@@ -263,7 +264,7 @@ app.post('/recibir-plato', async (req, res) => {
                         });
                 }
             }
-            // res.json({ redirectUrl: '/login/admin/pendientes' });
+            res.json({ redirectUrl: '/login/admin/pendientes' });
         } else {
             console.log('No se encontraron mesas.');
             res.json({ redirectUrl: '/login/admin/pendientes' });
