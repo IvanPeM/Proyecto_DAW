@@ -42,7 +42,7 @@
             {{#if (lookup ../lplato this.numero)}}
                 <ul>
                     {{#each (lookup ../lplato this.numero)}}
-                        <li>
+                        <li class="m-1">
                             {{this.numero}}: {{this.nombre}}
                             <button onclick="recibido({{../this.numero}}, {{this.numero}})" class="ms-3 btn btn-success">Recibido</button>
                         </li>

@@ -8,9 +8,8 @@ const Plato = require('./Plato.model.js');
 const mesaSchema = new mongoose.Schema({
     numero: {type: Number,require: true},
     personas: {type: Number,require: true},
-    URL: {type: String,require: true},
-    pedidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }],
-    recibidos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }]
+    pedidos: [{ plato: { type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }, cantidad: { type: Number, default: 0 } }],
+    recibidos: [{ plato: { type: mongoose.Schema.Types.ObjectId, ref: 'Plato' }, cantidad: { type: Number, default: 0 } }]
 });
 
 const Mesa = mongoose.model('Mesa', mesaSchema);

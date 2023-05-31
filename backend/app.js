@@ -94,9 +94,11 @@ app.get('/login/admin/pendientes', async (req, res) => {
         for (let mesa of mesas) {
             platos[mesa.numero] = [];
             for (let pedido of mesa.pedidos) {
-                let plato = await Plato.findOne({ _id: pedido });
+                let plato = await Plato.findOne({ _id: pedido.plato });
                 if (plato) {
-                    platos[mesa.numero].push(plato);
+                    for (let i = 0; i < pedido.cantidad; i++) {
+                        platos[mesa.numero].push(plato);
+                    }
                 }
             }
         }
@@ -248,9 +250,7 @@ app.post('/recibir-plato', async (req, res) => {
         if (mesa) {
             for (let i = 0; i < mesa.pedidos.length; i++) {
                 let plato = await Plato.findOne({ _id: mesa.pedidos[i] });
-                console.log(plato);
                 if (plato.numero == ob.numeroPlato) {
-                    console.log('entro');
                     mesa.recibidos.push(mesa.pedidos[i]);
                     mesa.pedidos.splice(i,1);
                     console.log(mesa);
@@ -282,7 +282,6 @@ app.post('/add-mesa', async (req, res) => {
         const anhadirMesa = new Mesa({
             numero: ob.numero,
             personas: ob.personas,
-            URL: `plato${ob.numero}`,
             pedidos: [],
             recibidos: []
         });
@@ -299,11 +298,12 @@ app.post('/add-mesa', async (req, res) => {
 
 app.post('/pedir-platos', async (req, res) => {
     let ob = req.body;
+    let mesa = await Mesa.findOne({numero: ob.mesa});
     for (let plato of ob.platos) {
-        //tengo que cambiar el model de mesa para
-        //que ademas del id del plato tambien guarde
-        //cuanta cantidad de esos platos
+        let bPlato = await Plato.findOne({numero : plato.numero})
+        mesa.pedidos.push({plato: bPlato._id, cantidad: plato.cantidad});
     }
+    await mesa.save();
 });
 
 app.listen(process.env.PORT, () => {
