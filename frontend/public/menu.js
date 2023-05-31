@@ -3,14 +3,16 @@
 let dinero = 0;
 
 function pedir(ultimo){
-    let platos = {};
+    let lplatos = [];
     for (let i = ultimo; i > 0; i--) {
-        platos[i] = document.getElementById(`plato${i}`).value
+        lplatos.push({cantidad: document.getElementById(`plato${i}`).value, numero : i});
+        document.getElementById(`plato${i}`).value = 0;
     }
-    console.log(platos);
+    console.log(lplatos);
     let pedir = document.getElementById(`pedir`);
     pedir.innerHTML = `Pedir`;
-    $.post("http://127.0.0.1:3000/pedir-plato", { platos: platos }, (data) => {
+    dinero = 0;
+    $.post("http://127.0.0.1:3000/pedir-platos", { platos: lplatos }, (data) => {
         if (data.redirectUrl) {
             window.location.href = data.redirectUrl;
         } else {

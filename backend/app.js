@@ -299,7 +299,11 @@ app.post('/add-mesa', async (req, res) => {
 
 app.post('/pedir-platos', async (req, res) => {
     let ob = req.body;
-    console.log(ob);
+    for (let plato of ob.platos) {
+        //tengo que cambiar el model de mesa para
+        //que ademas del id del plato tambien guarde
+        //cuanta cantidad de esos platos
+    }
 });
 
 app.listen(process.env.PORT, () => {
