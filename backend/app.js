@@ -297,6 +297,11 @@ app.post('/add-mesa', async (req, res) => {
     }
 });
 
+app.post('/pedir-platos', async (req, res) => {
+    let ob = req.body;
+    console.log(ob);
+});
+
 app.listen(process.env.PORT, () => {
     console.log("__Servidor levantado.__");
 });
