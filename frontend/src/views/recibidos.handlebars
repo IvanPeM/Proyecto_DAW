@@ -43,12 +43,17 @@
                 <ul>
                     {{#each (lookup ../lplato this.numero)}}
                         <li>
-                            {{this.numero}}: {{this.nombre}}
+                            {{this.numero}}: {{this.nombre}}  X{{this.cantidad}}
                         </li>
                     {{/each}}
                 </ul>
                 {{#if (lookup ../Mprecio this.numero)}}
-                    <h5>Cuenta: {{lookup ../Mprecio this.numero}}€</h5>
+                    <h5>
+                        Cuenta: {{lookup ../Mprecio this.numero}}€
+                        {{#unless this.pedidos}}
+                            <button onclick="pagar({{this.numero}})" class="ms-3 btn btn-success">Pagar</button>
+                        {{/unless}}
+                    </h5>
                 {{/if}}
             {{else}}
                 <p class="text-center">Aún no ha recibido ningún plato la mesa {{this.numero}}</p>
@@ -56,3 +61,5 @@
         </div>
     </div>
 {{/each}}
+
+<script src="/recibidos.js"></script>

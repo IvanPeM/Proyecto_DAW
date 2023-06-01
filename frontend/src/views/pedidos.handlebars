@@ -43,7 +43,7 @@
                 <ul>
                     {{#each (lookup ../lplato this.numero)}}
                         <li class="m-1">
-                            {{this.numero}}: {{this.nombre}}
+                            {{this.numero}}: {{this.nombre}} X{{this.cantidad}}
                             <button onclick="recibido({{../this.numero}}, {{this.numero}})" class="ms-3 btn btn-success">Recibido</button>
                         </li>
                     {{/each}}

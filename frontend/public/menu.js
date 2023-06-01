@@ -5,8 +5,10 @@ let dinero = 0;
 function pedir(ultimo,mesa){
     let lplatos = [];
     for (let i = ultimo; i > 0; i--) {
-        lplatos.push({cantidad: document.getElementById(`plato${i}`).value, numero : i});
-        document.getElementById(`plato${i}`).value = 0;
+        if(document.getElementById(`plato${i}`).value != 0){
+            lplatos.push({cantidad: document.getElementById(`plato${i}`).value, numero : i});
+            document.getElementById(`plato${i}`).value = 0;
+        }
     }
     let pedir = document.getElementById(`pedir`);
     pedir.innerHTML = `Pedir`;
