@@ -226,7 +226,12 @@ app.post('/eliminar-plato', async (req, res) => {
 app.post('/add-plato', async (req, res) => {
     let ob = req.body;
     const ultimoPlato = await Plato.findOne().sort({ createdAt: -1 });
-    let numero = ultimoPlato.numero + 1;
+    let numero = 0;
+    if(ultimoPlato == null){
+        numero = 1;
+    }else{
+        numero = ultimoPlato.numero + 1;
+    }
     const anhadirPlato = new Plato({
         nombre: ob.nombre,
         numero: numero,
