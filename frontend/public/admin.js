@@ -56,11 +56,11 @@ function editar(numero, nombre, precio, foto, ingredientes){
     let td4 = document.getElementById(`${numero}editar`);
 
     //En cada td existente se le añade los inputs para que puedas modificar.
-    tdNumero.innerHTML = `<input type="text" id="numero" name="numero" value="${numero}" readonly="readonly">`;
-    td.innerHTML = `<input type="text" id="nombre" name="nombre" value="${nombre}">`;
-    td1.innerHTML = `<input type="number" id="precio" name="precio" value="${precio}">`;
-    td2.innerHTML = `<input type="text" id="foto" name="foto" value="${foto}">`;
-    td3.innerHTML = `<input type="text" id="ingrediente" name="ingredientes" value="${ingredientes}">`;
+    tdNumero.innerHTML = `<input type="text" id="numero" class="form-control bg-black text-white border-0" name="numero" value="${numero}" readonly="readonly">`;
+    td.innerHTML = `<textarea type="text" id="nombre" name="nombre">${nombre}</textarea>`;
+    td1.innerHTML = `<input type="number" id="precio" class="form-control" name="precio" value="${precio}">`;
+    td2.innerHTML = `<input type="text" id="foto" class="form-control" name="foto" value="${foto}">`;
+    td3.innerHTML = `<textarea type="text" id="ingrediente" name="ingredientes">${ingredientes}</textarea>`;
     td4.innerHTML = `<input type="submit" class="btn btn-success" name="Editar" value="Aceptar">`;
 }
 
