@@ -32,14 +32,18 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 //Indica donde está los archivos del frontend.
-// app.use(express.static(path.join(__dirname, '../frontend/src')));
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
+/**
+ * Ruta raíz en GET
+ */
 app.get('/', async (req, res) => {
 
     try {
+        //buscar todos los platos
         let platos = await Plato.find({});
-        if (platos) {
+        if (platos) { //Si existen
+            //Renderiza el index.handlebars y envio todos los platos
             res.render('index', { lcarta: platos });
         } else {
             console.log('No se encontraron platos.');
@@ -51,14 +55,22 @@ app.get('/', async (req, res) => {
     }
 });
 
+/**
+ * Ruta de la mesa con el _id de la mesa en GET
+ */
 app.get('/mesa/:id', async (req, res) => {
+    //El :id
     const mesaId = req.params.id;
     
     try {
+        //Buscar la mesa con el id de la URL
         const mesa = await Mesa.findOne({ _id: mesaId });
+        //Busca el último plato creado
         let ultimoPlato = await Plato.findOne().sort({ createdAt: -1 });
+        //Buscar todos los platos
         let platos = await Plato.find({});
-        if (mesa) {
+        if (mesa) {//Si existe la mesa
+            //Renderiza el menu.handlebars y envio los platos, la mesa y el último plato
             res.render('menu', { lcarta: platos, mesa: mesa, ultimo: ultimoPlato });
         } else {
             res.status(404).json({ error: 'Mesa no encontrada' });
@@ -68,14 +80,23 @@ app.get('/mesa/:id', async (req, res) => {
     }
 });
 
+/**
+ * Ruta /login en GET
+ */
 app.get('/login', (req, res) => {
+    //Renderiza el login.html
     res.sendFile(path.join(__dirname, '../frontend/src/login.html'));
 });
 
+/**
+ * Ruta /login/admin en GET
+ */
 app.get('/login/admin', async (req, res) => {
     try {
+        //Buscar todos los Platos
         let platos = await Plato.find({});
-        if (platos) {
+        if (platos) { //Si exite algún plato
+            //Renderizar admin y enviar los platos
             res.render('admin', { lcarta: platos });
         } else {
             console.log('No se encontraron platos.');
@@ -87,21 +108,28 @@ app.get('/login/admin', async (req, res) => {
     }
 });
 
+/**
+ * Ruta /login/admin/pendientes en GET
+ */
 app.get('/login/admin/pendientes', async (req, res) => {
     let platos = {};
     try {
+        //Buscar todas las mesas
         let mesas = await Mesa.find({});
-        for (let mesa of mesas) {
+        for (let mesa of mesas) { //Recorrer las mesas
             platos[mesa.numero] = [];
-            for (let pedido of mesa.pedidos) {
+            for (let pedido of mesa.pedidos) { //Recorrer los pedidos
+                //Buscar el plato por su _id
                 let plato = await Plato.findOne({ _id: pedido.plato });
-                if (plato) {
+                if (plato) { //Si exite
+                    //Añado .cantidad al plato y lo añado al plato
                     plato.cantidad = pedido.cantidad;
                     platos[mesa.numero].push(plato);
                 }
             }
         }
-        if (mesas) {
+        if (mesas) { //Si exite
+            //Renderizar pedidos y enviar las mesas y los platos
             res.render('pedidos', { lmesa: mesas, lplato: platos });
         } else {
             console.log('No se encontraron mesas.');
@@ -113,10 +141,15 @@ app.get('/login/admin/pendientes', async (req, res) => {
     }
 });
 
+/**
+ * Ruta /login/admin/mesas en GET
+ */
 app.get('/login/admin/mesas', async (req, res) => {
     try {
+        //Busar todas las Mesas
         let mesas = await Mesa.find({});
-        if (mesas) {
+        if (mesas) { //Si existe
+            //Renderizar mesas y enviar las mesas
             res.render('mesas', { lmesa: mesas });
         } else {
             console.log('No se encontraron mesas.');
@@ -128,24 +161,31 @@ app.get('/login/admin/mesas', async (req, res) => {
     }
 });
 
+/**
+ * Ruta /login/admin/recibidos en GET
+ */
 app.get('/login/admin/recibidos', async (req, res) => {
     let platos = {};
     let precio = {};
     try {
+        //Buscar todas las Mesas
         let mesas = await Mesa.find({});
-        for (let mesa of mesas) {
+        for (let mesa of mesas) { //Recorrer las mesas
             platos[mesa.numero] = [];
             precio[mesa.numero]= 0;
-            for (let pedido of mesa.recibidos) {
+            for (let pedido of mesa.recibidos) { //Recorrer los recibidos
+                //Buscar el Plato por su _id
                 let plato = await Plato.findOne({ _id: pedido.plato });
-                if (plato) {
+                if (plato) { //Si exite
+                    //Añado .cantidad al plato y lo añado al plato
                     plato.cantidad = pedido.cantidad;
                     platos[mesa.numero].push(plato);
                     precio[mesa.numero]+= plato.precio*pedido.cantidad;
                 }
             }
         }
-        if (mesas) {
+        if (mesas) { //Si existe
+            //Renderizar recibidos y enviar las mesas, los platos y los precios
             res.render('recibidos', { lmesa: mesas, lplato: platos, Mprecio:precio });
         } else {
             console.log('No se encontraron mesas.');
@@ -164,10 +204,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
+/**
+ * Ruta /login en POST
+ */
 app.post('/login', async (req, res) => {
     let ob = req.body;
+    //Buscar el Usuario con el nombre y la pass que has puesto en el login
     let usuario = await Usuario.findOne({ nombre: ob.nombre, pass: ob.pass });
-    if (usuario) {
+    if (usuario) { //Si existe
+        //Renderizar /login/admin
         res.json({ redirectUrl: '/login/admin' });
     } else {
         console.log('No se encontró el usuario.');

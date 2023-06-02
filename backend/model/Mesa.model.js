@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 // Exportar el model de los platos.
 const Plato = require('./Plato.model.js');
 
+/**
+ * Model de la Mesa.
+ */
 const mesaSchema = new mongoose.Schema({
     numero: {type: Number,require: true},
     personas: {type: Number,require: true},
