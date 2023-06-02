@@ -185,7 +185,7 @@ app.post('/editar-plato', async (req, res) => {
                 plato.ingredientes = ob.ingredientes;
 
                 return plato.save()
-                    .then(platoGuardado => {
+                    .then(() => {
                         res.json({ redirectUrl: '/login/admin' });
                     })
                     .catch(error => {
@@ -235,7 +235,7 @@ app.post('/add-plato', async (req, res) => {
         ingredientes: ob.ingredientes
     });
     anhadirPlato.save()
-    .then(platoGuardado => {
+    .then(() => {
         res.json({ redirectUrl: '/login/admin' });
     })
     .catch(err => {
@@ -251,21 +251,27 @@ app.post('/recibir-plato', async (req, res) => {
             for (let i = 0; i < mesa.pedidos.length; i++) {
                 let plato = await Plato.findOne({ _id: mesa.pedidos[i].plato });
                 if (plato.numero == ob.numeroPlato) {
-                    // mesa.recibidos.push({plato: mesa.pedidos[i].plato, cantidad: mesa.pedidos[i].cantidad});
-                    console.log(mesa.recibidos);
-                    console.log(mesa.recibidos.some(item => item.plato.equals(mesa.pedidos[i].plato)));
-                    console.log(mesa.pedidos[i]);
-                    // mesa.pedidos.splice(i,1);
-                    // mesa.save()
-                    //     .then(platoGuardado => {
-                    //         console.log('Plato editado:', platoGuardado);
-                    //     })
-                    //     .catch(error => {
-                    //         console.log('Error al editar el plato:', error);
-                    //     });
+                    if (mesa.recibidos.findIndex(item => item.plato.equals(plato._id)) >= 0) {
+                        let posicionPlato = mesa.recibidos.findIndex(item => item.plato.equals(plato._id));
+                        mesa.recibidos[posicionPlato].cantidad += 1;
+                        mesa.pedidos[i].cantidad -= 1;
+                    }else{
+                        mesa.recibidos.push({plato: mesa.pedidos[i].plato, cantidad: 1});
+                        mesa.pedidos[i].cantidad -= 1;
+                    }
+                    if (mesa.pedidos[i].cantidad == 0) {
+                        mesa.pedidos.splice(i,1);
+                    }
+                    mesa.save()
+                        .then(() => {
+                            console.log('Plato editado');
+                        })
+                        .catch(error => {
+                            console.log('Error al editar el plato:', error);
+                        });
                 }
             }
-            // res.json({ redirectUrl: '/login/admin/pendientes' });
+            res.json({ redirectUrl: '/login/admin/pendientes' });
         } else {
             console.log('No se encontraron mesas.');
             res.json({ redirectUrl: '/login/admin/pendientes' });
@@ -289,7 +295,7 @@ app.post('/add-mesa', async (req, res) => {
         });
         
         anhadirMesa.save()
-        .then(platoGuardado => {
+        .then(() => {
             res.json({ redirectUrl: '/login/admin/mesas' });
         })
         .catch(err => {
@@ -301,25 +307,28 @@ app.post('/add-mesa', async (req, res) => {
 app.post('/pedir-platos', async (req, res) => {
     let ob = req.body;
     let mesa = await Mesa.findOne({numero: ob.mesa});
-    console.log(mesa);
     for (let plato of ob.platos) {
         let bPlato = await Plato.findOne({numero : plato.numero})
-        console.log(bPlato);
-        if (mesa.recibidos.findIndex(item => item.plato.equals(bPlato._id)) >= 0) {
-            let posicionPlato = mesa.recibidos.findIndex(item => item.plato.equals(bPlato._id));
+        if (mesa.pedidos.findIndex(item => item.plato.equals(bPlato._id)) >= 0) {
+            let posicionPlato = mesa.pedidos.findIndex(item => item.plato.equals(bPlato._id));
             mesa.pedidos[posicionPlato].cantidad += 1;
         }else{
             mesa.pedidos.push({plato: bPlato._id, cantidad: plato.cantidad});
         }
-        console.log(mesa.recibidos.findIndex(item => item.plato.equals(bPlato._id)));
-        // mesa.pedidos.push({plato: bPlato._id, cantidad: plato.cantidad});
     }
     await mesa.save();
 });
 
 app.post('/pagar', async (req, res) =>{
     let ob = req.body;
-    console.log(ob);
+    let mesa = await Mesa.findOne({numero : ob.numeroMesa});
+    mesa.deleteOne()
+    .then(() => {
+        res.json({ redirectUrl: '/login/admin/recibidos' });
+    })
+    .catch(err => {
+        console.log('Error al eliminar el plato:', err);
+    });
 });
 
 app.listen(process.env.PORT, () => {
