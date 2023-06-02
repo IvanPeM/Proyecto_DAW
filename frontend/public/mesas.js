@@ -22,4 +22,5 @@ $('#bNuevo').click( (e) => {
     contenido += '<div class="col-auto">';
     contenido += `<input type="submit" class="btn btn-success" name="Editar" value="Aceptar"></div>`;
     $('#fNuevo').append(contenido);
+    $('#bNuevo').prop('disabled', true);
 });
