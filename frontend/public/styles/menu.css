@@ -7,3 +7,7 @@
     height: 40px;
     cursor: pointer;
 }
+
+.btn-input{
+    border-radius: 50%;
+}
