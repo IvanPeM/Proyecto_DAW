@@ -206,6 +206,7 @@ app.use(express.json());
 
 /**
  * Ruta /login en POST
+ * Loguear para entrar a la zona administrador
  */
 app.post('/login', async (req, res) => {
     let ob = req.body;
@@ -219,11 +220,16 @@ app.post('/login', async (req, res) => {
     }
 });
 
+/**
+ * Ruta /editar-plato en POST
+ * Edito para modificar la información del plato
+ */
 app.post('/editar-plato', async (req, res) => {
     let ob = req.body;
+    //Buscar el Plato por su número
     Plato.findOne({ numero: ob.numero })
         .then(plato => {
-            if (plato) {
+            if (plato) { //Si existe
                 plato.nombre = ob.nombre;
                 plato.precio = ob.precio;
                 plato.foto = ob.foto;
@@ -231,6 +237,7 @@ app.post('/editar-plato', async (req, res) => {
 
                 return plato.save()
                     .then(() => {
+                        //Renderizar /login/admin
                         res.json({ redirectUrl: '/login/admin' });
                     })
                     .catch(error => {
@@ -246,13 +253,19 @@ app.post('/editar-plato', async (req, res) => {
         });
 });
 
+/**
+ * Ruta /eliminar-plato en POST
+ * Eliminar el plato que ya existe
+ */
 app.post('/eliminar-plato', async (req, res) => {
     let ob = req.body;
+    //Buscar el plato por su número
     Plato.findOne({ numero: ob.numero })
         .then(plato => {
-            if (plato) {
+            if (plato) { //Si existe
                 return plato.deleteOne()
                     .then(() => {
+                        //Renderizar /login/admin
                         res.json({ redirectUrl: '/login/admin' });
                     })
                     .catch(err => {
@@ -268,11 +281,16 @@ app.post('/eliminar-plato', async (req, res) => {
         });
 });
 
+/**
+ * Ruta /add-plato en POST
+ * Crear un nuevo plato
+ */
 app.post('/add-plato', async (req, res) => {
     let ob = req.body;
+    //Buscar el último plato para saber el número
     const ultimoPlato = await Plato.findOne().sort({ createdAt: -1 });
     let numero = 0;
-    if(ultimoPlato == null){
+    if(ultimoPlato == null){ //Si no tengo platos
         numero = 1;
     }else{
         numero = ultimoPlato.numero + 1;
@@ -286,6 +304,7 @@ app.post('/add-plato', async (req, res) => {
     });
     anhadirPlato.save()
     .then(() => {
+        //Renderizar /login/admin
         res.json({ redirectUrl: '/login/admin' });
     })
     .catch(err => {
@@ -293,23 +312,34 @@ app.post('/add-plato', async (req, res) => {
     });
 });
 
+/**
+ * Ruta /recibir-plato en POST
+ * Para los platos que ha pedido el cliente y ponerlo que ya está recibido
+ */
 app.post('/recibir-plato', async (req, res) => {
     let ob = req.body;
     try {
+        //Buscar por el número de mesa
         let mesa = await Mesa.findOne({numero:ob.numeroMesa});
-        if (mesa) {
-            for (let i = 0; i < mesa.pedidos.length; i++) {
+        if (mesa) { //Si existe
+            for (let i = 0; i < mesa.pedidos.length; i++) { //Recorrer los platos pedidos
+                //Buscar el plato por su _id
                 let plato = await Plato.findOne({ _id: mesa.pedidos[i].plato });
                 if (plato.numero == ob.numeroPlato) {
+                    //Si eixste el plato en los recibidos
                     if (mesa.recibidos.findIndex(item => item.plato.equals(plato._id)) >= 0) {
+                        //Sumo un plato para los que están recibidos y quito un plato para los pedidos
                         let posicionPlato = mesa.recibidos.findIndex(item => item.plato.equals(plato._id));
                         mesa.recibidos[posicionPlato].cantidad += 1;
                         mesa.pedidos[i].cantidad -= 1;
                     }else{
+                        //Si no existe lo añade a recibidos y quita un plato para los pedidos
                         mesa.recibidos.push({plato: mesa.pedidos[i].plato, cantidad: 1});
                         mesa.pedidos[i].cantidad -= 1;
                     }
+                    //Si en pedidos el plato no tiene ninguna
                     if (mesa.pedidos[i].cantidad == 0) {
+                        //Se elimina el plato en pedidos
                         mesa.pedidos.splice(i,1);
                     }
                     mesa.save()
@@ -321,6 +351,7 @@ app.post('/recibir-plato', async (req, res) => {
                         });
                 }
             }
+            //Renderizar los platos pendientes
             res.json({ redirectUrl: '/login/admin/pendientes' });
         } else {
             console.log('No se encontraron mesas.');
@@ -333,10 +364,16 @@ app.post('/recibir-plato', async (req, res) => {
 
 });
 
+/**
+ * Ruta /add-mesa en POST
+ * Crear una nueva mesa
+ */
 app.post('/add-mesa', async (req, res) => {
     let ob = req.body;
+    //Buscar si existe la mesa ya creada
     let mesa = await Mesa.findOne({numero:ob.numero});
-    if (!mesa) {
+    if (!mesa) { //Si no existe
+        //Crear la mesa
         const anhadirMesa = new Mesa({
             numero: ob.numero,
             personas: ob.personas,
@@ -346,6 +383,7 @@ app.post('/add-mesa', async (req, res) => {
         
         anhadirMesa.save()
         .then(() => {
+            //Renderizar las mesas
             res.json({ redirectUrl: '/login/admin/mesas' });
         })
         .catch(err => {
@@ -354,14 +392,22 @@ app.post('/add-mesa', async (req, res) => {
     }
 });
 
+/**
+ * Ruta pedir-plato en POST
+ * Para pedir los platos y añadirlo a pedidos
+ */
 app.post('/pedir-platos', async (req, res) => {
     let ob = req.body;
+    //Buscar la mesa que está pidiendo
     let mesa = await Mesa.findOne({numero: ob.mesa});
-    for (let plato of ob.platos) {
+    for (let plato of ob.platos) { //Recorrer los platos que ha pedido el cliente
+        //Buscar el plato por su numero
         let bPlato = await Plato.findOne({numero : plato.numero})
+        //Si existe el plato en pedidos
         if (mesa.pedidos.findIndex(item => item.plato.equals(bPlato._id)) >= 0) {
+            //Sumo a la cantidad que ya estaba pedido antes
             let posicionPlato = mesa.pedidos.findIndex(item => item.plato.equals(bPlato._id));
-            mesa.pedidos[posicionPlato].cantidad += 1;
+            mesa.pedidos[posicionPlato].cantidad += plato.cantidad;
         }else{
             mesa.pedidos.push({plato: bPlato._id, cantidad: plato.cantidad});
         }
@@ -369,8 +415,13 @@ app.post('/pedir-platos', async (req, res) => {
     await mesa.save();
 });
 
+/**
+ * Ruta /pagar en POST
+ * Eliminar la mesa que ya está pagada
+ */
 app.post('/pagar', async (req, res) =>{
     let ob = req.body;
+    //Buscar la mesa que quiere pagar
     let mesa = await Mesa.findOne({numero : ob.numeroMesa});
     mesa.deleteOne()
     .then(() => {
@@ -381,6 +432,9 @@ app.post('/pagar', async (req, res) =>{
     });
 });
 
+/**
+ * Encender el server desde el puesto enviado del .env
+ */
 app.listen(process.env.PORT, () => {
     console.log("__Servidor levantado.__");
 });

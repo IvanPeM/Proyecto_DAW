@@ -1,5 +1,8 @@
 "use strict";
 
+/**
+ * Jquey para el formulario del login y enviar la informacion al POST
+ */
 $('form').submit((e) => { 
     e.preventDefault();
     let nombre = $('#nombre').val();
