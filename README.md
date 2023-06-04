@@ -1,6 +1,8 @@
-# Proyecto_DAW
+# Restaurante Lotus
+## Proyecto_DAW
 
-## Requisitos Previos
+### Requisitos Previos
+***
 1. Instalar [Node.js](https://nodejs.org/en) en el ordenador donde se va a ejecutar.
 
 2. Al tener los archivos el proyecto entra a una terminal.
