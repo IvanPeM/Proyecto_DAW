@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const platoSchema = new mongoose.Schema({
     nombre: {type: String,require: true},
     numero: {type: Number,require: true},
-    foto: String,
+    foto: {type: String,require: true},
     precio: {type: Number,require: true},
     ingredientes: {type: String,require: true}
 },{timestamps: true});
