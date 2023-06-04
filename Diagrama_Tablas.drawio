@@ -1,0 +1,19 @@
+<mxfile host="app.diagrams.net" modified="2023-06-04T11:45:59.228Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36 OPR/98.0.0.0" etag="c4NJU5IzC1is8jc68HLA" version="21.3.7" type="device">
+  <diagram name="Página-1" id="g554YJjuox2VEBBbt11G">
+    <mxGraphModel dx="1002" dy="804" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="5Hf5E66UqSZ55T8NJpJU-61" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Platos : document&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;_id = &amp;lt;ObjectId&amp;gt;&lt;br&gt;nombre = String&lt;br&gt;numero = Number&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;foto = String&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;precio = Number&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;ingredientes = String&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;createdAt = &amp;lt;Date&amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;updatedAt = &amp;lt;Date&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="134" y="40" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="5Hf5E66UqSZ55T8NJpJU-62" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Usuario : document&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;_id = &amp;lt;ObjectId&amp;gt;&lt;br&gt;nombre = String&lt;br&gt;pass = String&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="334" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="5Hf5E66UqSZ55T8NJpJU-63" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;text-decoration:underline;&quot;&gt;&lt;b&gt;Mesa : document&lt;/b&gt;&lt;/p&gt;&lt;hr&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;_id = &amp;lt;ObjectId&amp;gt;&lt;br&gt;numero = Number&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;personas = Number&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;pedidos = [&lt;span style=&quot;background-color: initial;&quot;&gt;{&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;plato : _idPlato&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;cantidad : Number&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;}]&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;recibidos = [{&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;plato : _idPlato&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;&lt;span style=&quot;white-space: pre;&quot;&gt;&#x9;&lt;/span&gt;cantidad : Number&lt;br&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:8px;&quot;&gt;}]&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=12;fontFamily=Helvetica;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="534" y="40" width="160" height="200" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
