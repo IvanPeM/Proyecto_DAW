@@ -39,6 +39,15 @@ app.use(express.static(path.join(__dirname, '../frontend/public')));
  */
 app.get('/', async (req, res) => {
 
+    res.sendFile(path.join(__dirname, '../frontend/src/home.html'));
+    
+});
+
+/**
+ * Ruta raíz en GET
+ */
+app.get('/menu', async (req, res) => {
+
     try {
         //buscar todos los platos
         let platos = await Plato.find({});
